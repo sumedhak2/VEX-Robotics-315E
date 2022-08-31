@@ -1,0 +1,96 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       C:\Users\sumed                                            */
+/*    Created:      Sun Jun 19 2022                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Drivetrain           drivetrain    9, 1, 10, 2     
+// Controller1          controller                    
+// Rollers              motor         3               
+// Intake               motor         8               
+// Flywheel             motor         20              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+
+#include "vex.h"
+
+using namespace vex;
+
+
+
+
+void usercontrol (void) {
+  while (true) { 
+    int flywheelSpeed = 100;
+    int intakeSpeed = 100;
+    int rollerSpeed = 100;
+           
+    if (Controller1.ButtonL1.pressing()) {
+      Flywheel.spin(vex::directionType::fwd, flywheelSpeed, vex::velocityUnits::pct);
+    }
+
+    if (Controller1.ButtonL2.pressing()) {
+      Flywheel.spin(vex::directionType::rev, flywheelSpeed, vex::velocityUnits::pct);
+    }
+
+    if (Controller1.ButtonR1.pressing()) {
+      Intake.spin(vex::directionType::fwd, intakeSpeed, vex::velocityUnits::pct);
+    }
+
+    if (Controller1.ButtonR2.pressing()) {
+      Intake.spin(vex::directionType::rev, intakeSpeed, vex::velocityUnits::pct);
+    }
+
+    if (Controller1.ButtonA.pressing()) {
+      Rollers.spin(vex::directionType::fwd, rollerSpeed, vex::velocityUnits::pct);
+    }
+
+    if (Controller1.ButtonB.pressing()) {
+      Rollers.spin(vex::directionType::rev, rollerSpeed, vex::velocityUnits::pct);
+    }
+  }
+}
+
+
+
+
+void autonomous (void) {
+  Rollers.rotateFor(reverse, 360, vex::rotationUnits::deg);
+  Rollers.setVelocity(100 , percent);
+  Drivetrain.driveFor(forward, 1.5, inches);
+}
+
+
+
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  // autonomous();
+  usercontrol();
+
+
+
+
+
+
+
+  // // Printing things on screen
+  // Brain.Screen.print("hello");
+
+  // Drivetrain drives (what direction, how much distance you want to drive, in what kind of measurement inches/cm)
+  // Drivetrain.driveFor(forward, 10, inches);
+
+  // //Drivetrain turns (what direction, how much you want to turn, in what kind of measurement degrees)
+  // Drivetrain.turnFor(left, 90, degrees);
+
+  // // Attachments - what direction, how much, what kind of measurement
+  // intake.spinFor(forward, 1, turns);
+}
+
